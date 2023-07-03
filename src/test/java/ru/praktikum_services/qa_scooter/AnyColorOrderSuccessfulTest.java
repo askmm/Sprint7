@@ -12,6 +12,9 @@ import ru.praktikum_services.qa_scooter.order.OrderAssertions;
 import ru.praktikum_services.qa_scooter.order.OrderClient;
 import ru.praktikum_services.qa_scooter.order.OrderGenerator;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.greaterThan;
+
 @RunWith(Parameterized.class)
 public class AnyColorOrderSuccessfulTest{
     private final OrderClient client = new OrderClient();
@@ -46,8 +49,8 @@ public class AnyColorOrderSuccessfulTest{
         return new Object[][] {
                 {"Иванов", "Иван", "Липовая ал. 15", "25", "777 777 777", "42", "2023-07-05", "-", new String[]{"BLACK"}},
                 {"Иванов", "Иван", "Липовая ал. 15", "25", "777 777 777", "42", "2023-07-05", "-", new String[]{"GREY"}},
-//                {"Иванов", "Иван", "Липовая ал. 15", "25", "777 777 777", "42", "2023-07-05", "-", new String[]{"GREY", "BLACK"}},
-//                {"Иванов", "Иван", "Липовая ал. 15", "25", "777 777 777", "42", "2023-07-05", "-", new String[]{}},
+                {"Иванов", "Иван", "Липовая ал. 15", "25", "777 777 777", "42", "2023-07-05", "-", new String[]{"GREY", "BLACK"}},
+                {"Иванов", "Иван", "Липовая ал. 15", "25", "777 777 777", "42", "2023-07-05", "-", new String[]{}},
         };
     }
 
@@ -58,7 +61,7 @@ public class AnyColorOrderSuccessfulTest{
         Order order = generator.generate(this);
         ValidatableResponse response = client.createOrder(order);
         track = check.createdSuccessfully(response);
-        assert track > 0;
+        assertThat(track, greaterThan(0));
     }
 
     @After
